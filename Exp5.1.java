@@ -12,27 +12,52 @@ Steps to implement:
   
 Java Program:
 
-parseStringToInteger(): This method parses a string into an Integer. It catches any NumberFormatException if the string is not a valid number.
-calculateSum(): This method calculates the sum of a list of integers. Java automatically performs unboxing when adding Integer values to sum (an int).
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
+public class IntegerSumCalculator {
 
+   
+    public static Integer parseStringToInteger(String str) {
+        try {
+            return Integer.parseInt(str); 
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid number format: " + str);
+            return null; 
+        }
+    }
 
+   
+    public static int calculateSum(List<Integer> numbers) {
+        int sum = 0;
+        for (Integer num : numbers) {
+            if (num != null) {
+                sum += num; 
+            }
+        }
+        return sum;
+    }
 
-Test Cases:
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        List<Integer> numbers = new ArrayList<>();
 
-Test Case 1:
-Input: 10, 20, 30, "40", "50"
-Expected Output: The sum of the list is: 150
-Description: The list contains a mix of primitive integers and integers parsed from strings.
+        System.out.println("Enter numbers (type 'done' to finish):");
 
-Test Case 2:
-Input: "100", "200", "300"
-Expected Output: The sum of the list is: 600
-Description: All values are parsed from strings, and the sum is calculated.
+        while (true) {
+            String input = scanner.nextLine();
+            if (input.equalsIgnoreCase("done")) {
+                break;
+            }
+            Integer number = parseStringToInteger(input);
+            if (number != null) {
+                numbers.add(number);
+            }
+        }
 
-Test Case 3:
-Input: "50", "invalid", "70"
-Expected Output:
-Invalid number format: invalid
-The sum of the list is: 120
-Description: One of the inputs is not a valid integer, so it's skipped, and the sum of valid values is calculated.
+        scanner.close();
+
+        System.out.println("The sum of the list is: " + calculateSum(numbers));
+    }
+}
